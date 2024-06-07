@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import User from "../util/User";
 
 interface ProductoProps {
   titulo: string;
@@ -21,7 +22,7 @@ function Producto(props: ProductoProps) {
     const requestBody = {
       title: props.titulo,
       price: props.precio,
-      email: localStorage.getItem("usuario"),
+      email: User.getEmail(),
       cantidad: 1,
     };
 

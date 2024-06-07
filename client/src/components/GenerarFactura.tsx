@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { faCreditCard, faLocationDot, faUser } from "@fortawesome/free-solid-svg-icons"
 import IconInput from "./IconInput"
 import toast from "react-hot-toast";
+import User from "../util/User";
 
 interface ProductoCarrito {
   id: string;
@@ -41,7 +42,7 @@ function GenerarFactura() {
 
   useEffect(() => {
     const url =
-      "http://localhost:8080/carritos/" + localStorage.getItem("usuario");
+      "http://localhost:8080/carritos/" + User.getEmail();
 
     fetch(url, {
       method: "GET",
@@ -59,7 +60,7 @@ function GenerarFactura() {
     event.preventDefault();
 
     const requestBody = { 
-      nombre, email: localStorage.getItem("usuario"), domicilio, pago, metodo, price: calcularTotal(), date: new Date().toLocaleString(), productos: carrito
+      nombre, email: User.getEmail(), domicilio, pago, metodo, price: calcularTotal(), date: new Date().toLocaleString(), productos: carrito
     };
 
     fetch("http://localhost:8080/facturas", {

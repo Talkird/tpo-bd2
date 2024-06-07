@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import toast from "react-hot-toast";
+import User from "../util/User";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -26,7 +27,9 @@ function LoginForm() {
         if (response.ok) {
           toast.success("Se ha iniciado sesión correctamente.");
           navigate("/store");
-          localStorage.setItem("usuario", email);
+          User.setEmail(email);
+          User.startTimer();
+
         } else {
           toast.error("Error, email o contraseña incorrecta.");
         }

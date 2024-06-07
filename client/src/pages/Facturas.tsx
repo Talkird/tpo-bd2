@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import User from "../util/User";
 
 interface Factura {
   id: string;
@@ -35,7 +36,7 @@ function Facturas() {
 
   useEffect(() => {
     const url =
-      "http://localhost:8080/facturas/" + localStorage.getItem("usuario");
+      "http://localhost:8080/facturas/" + User.getEmail();
 
     fetch(url, {
       method: "GET",

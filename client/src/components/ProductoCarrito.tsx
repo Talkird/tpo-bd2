@@ -2,6 +2,7 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import User from "../util/User";
 
 interface ProductoCarritoProps {
   titulo: string;
@@ -22,7 +23,7 @@ function ProductoCarrito(props: ProductoCarritoProps) {
   };
 
   const eliminarProducto = (event: { preventDefault: () => void }) => {
-    const url = "http://localhost:8080/carritos/" + localStorage.getItem("usuario") + "/" + props.titulo;
+    const url = "http://localhost:8080/carritos/" + User.getEmail() + "/" + props.titulo;
 
     fetch(url, {
       method: "DELETE"
@@ -45,7 +46,7 @@ function ProductoCarrito(props: ProductoCarritoProps) {
 
     const url =
       "http://localhost:8080/carritos/" +
-      localStorage.getItem("usuario") +
+      User.getEmail() +
       "/" +
       props.titulo;
 

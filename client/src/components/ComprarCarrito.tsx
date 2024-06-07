@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast"
+import User from "../util/User";
 
 interface ProductoCarrito {
   id: string;
@@ -34,7 +35,7 @@ function ComprarCarrito() {
 
   useEffect(() => {
     const url =
-      "http://localhost:8080/carritos/" + localStorage.getItem("usuario");
+      "http://localhost:8080/carritos/" + User.getEmail();
 
     fetch(url, {
       method: "GET",
@@ -48,7 +49,7 @@ function ComprarCarrito() {
   });
 
   const comprarCarrito = (event: { preventDefault: () => void }) => {
-    if (localStorage.getItem("usuario") !== null) {
+    if (User.getEmail() !== null) {
       navigate("/compra");
       toast.success("Redireccionando al portal de pago...")
     }

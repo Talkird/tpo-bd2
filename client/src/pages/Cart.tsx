@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductoCarrito from "../components/ProductoCarrito";
 import ComprarCarrito from "../components/ComprarCarrito";
+import User from "../util/User";
 
 interface Cart {
   id: string;
@@ -15,7 +16,7 @@ function Cart() {
 
   useEffect(() => {
     const url =
-      "http://localhost:8080/carritos/" + localStorage.getItem("usuario");
+      "http://localhost:8080/carritos/" + User.getEmail();
 
     fetch(url, {
       method: "GET",

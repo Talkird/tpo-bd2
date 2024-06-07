@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import User from "../util/User";
 
 function Navbar() {
-  const [logged, setLogged] = useState(false);
+  const [sessionTime, setSessionTime] = useState(0);
 
-    return (
+  const handleLogout = () => {
+    if (User.getEmail() !== "") {
+      setSessionTime(User.getTimer());
+      //User.clearEmail(); al final
+      User.stopTimer();
+    }
+
+    //TODO put request change type
+  }
+
+  return (
     <nav className="flex w-full flex-row items-center justify-between gap-8 rounded-lg bg-white p-4 shadow-md">
       <div>
-        <Link className="text-2xl font-semibold" to="/">
+        <Link onClick={handleLogout} className="text-2xl font-semibold" to="/">
           Página Principal
         </Link>
       </div>
-      
+
       <div className="flex flex-row items-center gap-8">
         <Link to="/store" className="text-lg font-semibold">
           Tienda
@@ -24,7 +34,6 @@ function Navbar() {
           Mis Facturas
         </Link>
       </div>
-      
 
       <div className="flex flex-row items-center gap-8">
         <Link to="/login" className="text-lg font-semibold">
