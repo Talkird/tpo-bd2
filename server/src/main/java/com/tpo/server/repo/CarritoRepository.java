@@ -9,6 +9,5 @@ import com.tpo.server.model.ProductCarrito;
 @Repository
 public interface CarritoRepository extends MongoRepository<ProductCarrito, String> {
     List<ProductCarrito> findByEmail(String email);
-
     List<ProductCarrito> findByTitle(String title);
 }

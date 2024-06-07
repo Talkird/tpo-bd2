@@ -12,7 +12,6 @@ interface ProductoCarrito {
 
 function ComprarCarrito() {
   const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
-  const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
 
