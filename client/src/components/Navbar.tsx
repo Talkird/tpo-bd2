@@ -8,7 +8,7 @@ function Navbar() {
     const sessionDuration = (Date.now() - User.getTimer()) / 1000;
     User.stopTimer();
 
-    let userType = "pinga";
+    let userType = "";
 
     if (sessionDuration <= 10) {
       userType = "low";
