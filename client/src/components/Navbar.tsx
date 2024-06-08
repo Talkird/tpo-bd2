@@ -1,4 +1,3 @@
-import { useState } from "react";
 import User from "../util/User";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -42,7 +41,7 @@ function Navbar() {
     <nav className="flex w-full flex-row items-center justify-between gap-8 rounded-lg bg-white p-4 shadow-md">
       <div>
         <Link onClick={handleLogout} className="text-2xl font-semibold" to="/">
-          Página Principal
+          Logout
         </Link>
       </div>
 

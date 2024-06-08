@@ -28,6 +28,13 @@ public class CarritoController {
 
     @PostMapping("/carritos")
     public ProductCarrito agregarProductCarrito(@RequestBody ProductCarrito carrito) {
+
+        for (ProductCarrito pc : repo.findByEmail(carrito.getEmail())) {
+            if (pc.getTitle().equals(carrito.getTitle())) {
+                throw new RuntimeException("Producto ya existe");
+            }
+        }
+
         return repo.save(carrito);
     }
 
@@ -35,8 +42,6 @@ public class CarritoController {
     public List<ProductCarrito> obtenerProductsCarritoEmail(@PathVariable String email) {
         return repo.findByEmail(email);
     }
-
-    
 
     @PutMapping("/carritos/{email}/{title}")
     public ProductCarrito modificarCantidad(@PathVariable String email, @PathVariable String title,
@@ -56,7 +61,8 @@ public class CarritoController {
         List<ProductCarrito> carritos = repo.findByEmail(email);
         for (ProductCarrito carrito : carritos) {
             if (carrito.getTitle().equals(title)) {
-                repo.delete(carrito);;
+                repo.delete(carrito);
+                ;
             }
         }
     }
