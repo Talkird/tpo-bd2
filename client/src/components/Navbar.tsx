@@ -1,19 +1,42 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import User from "../util/User";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  const [sessionTime, setSessionTime] = useState(0);
-
   const handleLogout = () => {
-    if (User.getEmail() !== "") {
-      setSessionTime(User.getTimer());
-      //User.clearEmail(); al final
-      User.stopTimer();
+    const sessionDuration = (Date.now() - User.getTimer()) / 1000;
+    User.stopTimer();
+
+    let userType = "pinga";
+
+    if (sessionDuration <= 10) {
+      userType = "low";
+    } else if (sessionDuration > 10 && sessionDuration < 30) {
+      userType = "medium";
+    } else {
+      userType = "top";
     }
 
-    //TODO put request change type
-  }
+    const url = "http://localhost:8080/users/" + User.getEmail();
+
+    fetch(url, {
+      method: "PUT",
+      body: userType,
+    })
+      .then((response) => {
+        if (response.ok) {
+          toast.success("Se ha cerrado la sesión correctamente.");
+          User.clearEmail();
+          User.stopTimer();
+        } else {
+          toast.error("Error al cerrar sesión.");
+        }
+      })
+      .catch((error) => {
+        toast.error("Error al cerrar sesión.");
+      });
+  };
 
   return (
     <nav className="flex w-full flex-row items-center justify-between gap-8 rounded-lg bg-white p-4 shadow-md">

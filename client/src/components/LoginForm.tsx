@@ -16,7 +16,7 @@ function LoginForm() {
   const handleLogin = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    const requestBody = { email, password, type: "regular" };
+    const requestBody = { email, password, type: "low" };
 
     fetch("http://localhost:8080/login", {
       method: "POST",
@@ -29,7 +29,6 @@ function LoginForm() {
           navigate("/store");
           User.setEmail(email);
           User.startTimer();
-
         } else {
           toast.error("Error, email o contraseña incorrecta.");
         }

@@ -13,8 +13,7 @@ function RegisterForm() {
 
   const handleRegister = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
-    const requestBody = { email, password, type: "regular" };
+    const requestBody = { email, password, type: "low" };
 
     fetch("http://localhost:8080/users", {
       method: "POST",

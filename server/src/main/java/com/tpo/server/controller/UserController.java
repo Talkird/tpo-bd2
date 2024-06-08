@@ -1,10 +1,14 @@
 package com.tpo.server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +16,7 @@ import com.tpo.server.model.User;
 import com.tpo.server.repo.UserRepository;
 
 @RestController
-@CrossOrigin(origins = "*") 
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -41,6 +45,19 @@ public class UserController {
         }
 
         return "Inicio de sesión exitoso.";
+    }
+
+    @PutMapping("/users/{email}")
+    public User setActivity(@PathVariable String email, @RequestBody String type) {
+        User user = repo.findByEmail(email);
+
+        if (user != null) {
+            user.setType(type);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+
+        return repo.save(user);
     }
 
     @DeleteMapping("/users")
