@@ -1,5 +1,7 @@
 package com.tpo.server.controller;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.tpo.server.model.Product;
 import com.tpo.server.model.ProductCarrito;
 import com.tpo.server.repo.CarritoRepository;
 import com.tpo.server.repo.ProductRepository;
+import com.tpo.server.util.Logger;
 
 @RestController
 @CrossOrigin(origins = "*") // xd
@@ -43,6 +46,9 @@ public class ProductController {
             throw new RuntimeException("Error al actualizar producto");
         }
 
+        int precioViejo, precioNuevo;
+        precioViejo = lp.get(0).getPrice();
+
         List<ProductCarrito> carritos = repoCarrito.findByTitle(lp.get(0).getTitle());
 
         if (carritos != null) {
@@ -54,6 +60,14 @@ public class ProductController {
 
         Product p = lp.get(0);
         p.setPrice(product.getPrice());
+        precioNuevo = p.getPrice();
+        try {
+            Logger.initializeLogFile();
+            Logger.appendChange(
+                    "Producto " + p.getTitle() + " de " + precioViejo + " a " + precioNuevo + " - " + new Date());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return repo.save(p);
     }
 

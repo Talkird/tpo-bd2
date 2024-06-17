@@ -56,13 +56,20 @@ public class CarritoController {
         throw new RuntimeException("Carrito not found for email: " + email + " and title: " + title);
     }
 
+    @DeleteMapping("/carritos/{email}")
+    public void vaciarCarrito(@PathVariable String email) {
+        List<ProductCarrito> carritos = repo.findByEmail(email);
+        for (ProductCarrito carrito : carritos) {
+            repo.delete(carrito);
+        }
+    }
+
     @DeleteMapping("/carritos/{email}/{title}")
     public void borrarProductCarrito(@PathVariable String email, @PathVariable String title) {
         List<ProductCarrito> carritos = repo.findByEmail(email);
         for (ProductCarrito carrito : carritos) {
             if (carrito.getTitle().equals(title)) {
                 repo.delete(carrito);
-                ;
             }
         }
     }

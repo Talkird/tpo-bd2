@@ -19,5 +19,6 @@ public class Pedido {
     private String email;
     private int price;
     private String date;
+    private boolean selected;
     private List<ProductCarrito> productos;
 }

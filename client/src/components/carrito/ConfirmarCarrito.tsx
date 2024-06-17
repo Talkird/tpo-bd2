@@ -2,15 +2,6 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import User from "../../util/User";
 
-interface Pedido {
-  id: string;
-  email: string;
-  price: number;
-  date: string;
-  cantidad: number;
-  productos: ProductoCarrito[];
-}
-
 interface ProductoCarrito {
   id: string;
   title: string;
@@ -47,6 +38,7 @@ function ConfirmarCarrito() {
       price: calcularTotal(),
       date: new Date().toLocaleString(),
       productos: carrito,
+      selected: false,
     };
 
     fetch(url, {
@@ -57,12 +49,32 @@ function ConfirmarCarrito() {
       .then((response) => {
         if (response.ok) {
           toast.success("Pedido confirmado.");
+          vaciarCarrito();
         } else {
           toast.error("Error al confirmar pedido.");
         }
       })
       .catch((error) => {
         toast.error("Error al confirmar pedido.");
+      });
+  };
+
+  const vaciarCarrito = () => {
+    const url = "http://localhost:8080/carritos/" + User.getEmail();
+
+    fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.ok) {
+          toast.success("Carrito vaciado.");
+        } else {
+          toast.error("Error al vaciar carrito.");
+        }
+      })
+      .catch((error) => {
+        toast.error("Error al vaciar carrito.");
       });
   };
 
