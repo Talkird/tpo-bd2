@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ProductoCarrito from "../components/ProductoCarrito";
-import ComprarCarrito from "../components/ComprarCarrito";
+import ProductoCarrito from "../components/carrito/ProductoCarrito";
+import ComprarCarrito from "../components/carrito/ConfirmarCarrito";
 import User from "../util/User";
 
 interface Cart {
@@ -15,8 +15,7 @@ function Cart() {
   const [carts, setCarts] = useState<Cart[]>([]);
 
   useEffect(() => {
-    const url =
-      "http://localhost:8080/carritos/" + User.getEmail();
+    const url = "http://localhost:8080/carritos/" + User.getEmail();
 
     fetch(url, {
       method: "GET",
@@ -34,7 +33,7 @@ function Cart() {
       <ComprarCarrito />
       <div className="grid rounded-lg text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {carts.map((item) => (
-        <ProductoCarrito
+          <ProductoCarrito
             key={item.id}
             titulo={item.title}
             precio={item.price}

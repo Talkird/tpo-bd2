@@ -2,7 +2,7 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import User from "../util/User";
+import User from "../../util/User";
 
 interface ProductoCarritoProps {
   titulo: string;
@@ -23,32 +23,30 @@ function ProductoCarrito(props: ProductoCarritoProps) {
   };
 
   const eliminarProducto = (event: { preventDefault: () => void }) => {
-    const url = "http://localhost:8080/carritos/" + User.getEmail() + "/" + props.titulo;
+    const url =
+      "http://localhost:8080/carritos/" + User.getEmail() + "/" + props.titulo;
 
     fetch(url, {
-      method: "DELETE"
+      method: "DELETE",
     })
-    .then((response) => {
-      if (response.ok) {
-        toast.success("Producto eliminado del carrito.")
-      } else {
-        toast.error("Error al eliminar del carrito.")
-      }
+      .then((response) => {
+        if (response.ok) {
+          toast.success("Producto eliminado del carrito.");
+        } else {
+          toast.error("Error al eliminar del carrito.");
+        }
       })
-      
-    .catch((error) => {
-      toast.error("Error al eliminar del carrito.");
-    });
+
+      .catch((error) => {
+        toast.error("Error al eliminar del carrito.");
+      });
   };
 
   const cambiarCantidad = (newCount: number) => {
     const requestBody = newCount;
 
     const url =
-      "http://localhost:8080/carritos/" +
-      User.getEmail() +
-      "/" +
-      props.titulo;
+      "http://localhost:8080/carritos/" + User.getEmail() + "/" + props.titulo;
 
     fetch(url, {
       method: "PUT",

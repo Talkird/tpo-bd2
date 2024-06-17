@@ -52,6 +52,9 @@ function Navbar() {
         <Link to="/cart" className="text-lg font-semibold">
           Carrito
         </Link>
+        <Link to="/pedidos" className="text-lg font-semibold">
+          Mis Pedidos
+        </Link>
         <Link to="/facturas" className="text-lg font-semibold">
           Mis Facturas
         </Link>

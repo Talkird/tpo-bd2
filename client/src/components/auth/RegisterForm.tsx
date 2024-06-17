@@ -1,51 +1,46 @@
 import { useState } from "react";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import IconInput from "./IconInput";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import IconInput from "../IconInput";
+import { Link, useNavigate } from "react-router-dom";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import User from "../util/User";
 
-function LoginForm() {
+function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogin = (event: { preventDefault: () => void }) => {
+  const handleRegister = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
     const requestBody = { email, password, type: "low" };
 
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     })
       .then((response) => {
         if (response.ok) {
-          toast.success("Se ha iniciado sesión correctamente.");
-          navigate("/store");
-          User.setEmail(email);
-          User.startTimer();
+          toast.success("Usuario registrado correctamente.");
+          navigate("/login");
         } else {
-          toast.error("Error, email o contraseña incorrecta.");
+          toast.error("Error, el email ya existe.");
         }
       })
       .catch((error) => {
-        toast.error("Error al iniciar sesión.");
+        toast.error("Error al registrar usuario.");
       });
   };
 
   return (
     <form
       className="m-5 w-full max-w-md rounded-lg bg-white p-8 text-center shadow-lg"
-      onSubmit={handleLogin}
+      onSubmit={handleRegister}
     >
-      <h1 className="mb-4 text-4xl font-bold text-gray-800">Iniciar Sesión</h1>
+      <h1 className="mb-4 text-4xl font-bold text-gray-800">Registrarse</h1>
       <p className="mb-6 text-xl text-gray-600">
-        Bienvenido, ingrese sus datos:
+        Bienvenido, por favor ingrese sus datos para registrarse:
       </p>
 
       <IconInput onChange={setEmail} icon={faEnvelope} placeholder="Email" />
@@ -59,20 +54,17 @@ function LoginForm() {
         type="submit"
         className="mt-6 w-full rounded-md bg-blue-500 px-4 py-3 text-xl font-semibold text-white transition hover:bg-blue-600"
       >
-        Iniciar Sesión
+        Registrarse
       </button>
 
       <div className="mt-4 flex w-full flex-row justify-center gap-1 text-center">
-        <p> No tenés cuenta? </p>
-        <Link
-          to="/register"
-          className="text-blue-500 transition hover:underline"
-        >
-          Registrate
+        <p>Ya tenés cuenta?</p>
+        <Link to="/" className="text-blue-500 transition hover:underline">
+          Iniciar Sesión
         </Link>
       </div>
     </form>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

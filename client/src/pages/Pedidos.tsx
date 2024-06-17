@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import User from "../util/User";
 
-interface Factura {
+interface Pedido {
   id: string;
-  nombre: string;
   email: string;
-  domicilio: string;
-  pago: string;
-  metodo: string;
   price: number;
   date: string;
+  cantidad: number;
   productos: ProductoCarrito[];
 }
 
@@ -21,8 +18,8 @@ interface ProductoCarrito {
   cantidad: number;
 }
 
-function Facturas() {
-  const [facturas, setFacturas] = useState<Factura[]>([]);
+function Pedidos() {
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -34,7 +31,7 @@ function Facturas() {
   };
 
   useEffect(() => {
-    const url = "http://localhost:8080/facturas/" + User.getEmail();
+    const url = "http://localhost:8080/facturas/" + User.getEmail(); //TODO cambiar a pedidos
 
     fetch(url, {
       method: "GET",
@@ -43,48 +40,35 @@ function Facturas() {
       .then((response) => {
         return response.json();
       })
-      .then((data: Factura[]) => setFacturas(data))
+      .then((data: Pedido[]) => setPedidos(data))
       .catch((error) => console.error("Error fetching cart items:", error));
   }, []);
 
   return (
     <div className="h-screen bg-gradient-to-r from-cyan-500 to-teal-600">
       <div className="flex flex-grow rounded-lg text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
-        {facturas.map((factura) => (
+        {pedidos.map((pedido) => (
           <div
             className="w- m-5 rounded-lg bg-white p-5 text-left text-xl shadow-sm"
-            key={factura.id}
+            key={pedido.id}
           >
             <p>
-              <span className="font-semibold"> Id:</span> {factura.id}{" "}
+              <span className="font-semibold"> Id:</span> {pedido.id}{" "}
             </p>
             <p>
-              <span className="font-semibold"> Fecha:</span> {factura.date}{" "}
+              <span className="font-semibold"> Fecha:</span> {pedido.date}{" "}
             </p>
             <p>
-              <span className="font-semibold"> Nombre:</span> {factura.nombre}{" "}
-            </p>
-            <p>
-              <span className="font-semibold"> Email:</span> {factura.email}{" "}
-            </p>
-            <p>
-              <span className="font-semibold"> Domicilio:</span>{" "}
-              {factura.domicilio}{" "}
-            </p>
-            <p>
-              <span className="font-semibold"> Tarjeta:</span> {factura.pago}{" "}
-            </p>
-            <p>
-              <span className="font-semibold"> Método:</span> {factura.metodo}{" "}
+              <span className="font-semibold"> Email:</span> {pedido.email}{" "}
             </p>
             <p>
               <span className="font-semibold"> Precio:</span>{" "}
-              {formatCurrency(factura.price)}{" "}
+              {formatCurrency(pedido.price)}{" "}
             </p>
 
             <p className="mt-8 font-semibold underline">Productos</p>
             <div className="flex flex-col">
-              {factura.productos.map((producto) => (
+              {pedido.productos.map((producto) => (
                 <div key={producto.id} className="flex justify-between gap-8">
                   <p>{producto.title} </p>
                   <p>
@@ -105,4 +89,4 @@ function Facturas() {
   );
 }
 
-export default Facturas;
+export default Pedidos;

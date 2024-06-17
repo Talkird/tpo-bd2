@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.tpo.server.model.Product;
+import com.tpo.server.model.Pedido;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Product, String> {
-    List<Product> findByTitle(String title);
+public interface PedidoRepository extends MongoRepository<Pedido, String> {
+    List<Pedido> findByEmail(String email);
 }
