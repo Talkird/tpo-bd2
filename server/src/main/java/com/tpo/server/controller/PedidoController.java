@@ -46,7 +46,13 @@ public class PedidoController {
     @DeleteMapping("/pedidos/email/{email}")
     public void eliminarPedidoEmail(@PathVariable String email) {
         List<Pedido> pedidos = repo.findByEmail(email);
-        repo.deleteAll(pedidos);
+
+        for (Pedido pedido : pedidos) {
+            if (pedido.isSelected()) {
+                repo.deleteById(pedido.getId());
+            }
+        }
+
     }
 
 }

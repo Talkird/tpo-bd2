@@ -42,6 +42,11 @@ function Producto(props: ProductoProps) {
   const agregarAlCarrito = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
+    if (User.getEmail() === null || User.getEmail() === "") {
+      toast.error("Debe iniciar sesión.");
+      return;
+    }
+
     const requestBody = {
       title: props.titulo,
       price: props.precio,

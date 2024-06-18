@@ -84,6 +84,11 @@ function ComprarPedidos(props: ComprarPedidosProps) {
   const handleConfirmar = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
+    if (User.getEmail() === null || User.getEmail() === "") {
+      toast.error("Debe iniciar sesión.");
+      return;
+    }
+
     llenarProductos();
 
     const requestBody = {

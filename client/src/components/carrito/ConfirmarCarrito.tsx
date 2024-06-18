@@ -33,6 +33,11 @@ function ConfirmarCarrito() {
   const confirmarCarrito = (event: { preventDefault: () => void }) => {
     const url = "http://localhost:8080/pedidos";
 
+    if (User.getEmail() === null || User.getEmail() === "") {
+      toast.error("Debe iniciar sesión.");
+      return;
+    }
+
     const requestBody = {
       email: User.getEmail(),
       price: calcularTotal(),
