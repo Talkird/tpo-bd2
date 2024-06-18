@@ -66,7 +66,7 @@ function Pedidos() {
         <p className="font-medium"> Costo: {formatCurrency(calcularTotal())}</p>
         <PopupComprarPedidos pedidos={pedidos} />
       </div>
-      <div className="flex flex-grow rounded-lg text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+      <div className="m-5 grid rounded-lg text-center sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {pedidos.map((pedido) => (
           <Pedido
             id={pedido.id}

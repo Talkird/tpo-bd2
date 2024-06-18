@@ -63,7 +63,7 @@ function Pedido(props: PedidoProps) {
 
   return (
     <div
-      className="m-5 rounded-lg bg-white p-5 text-left text-xl shadow-sm"
+      className="m-15 w-96 rounded-lg bg-white p-5 text-left text-xl shadow-sm"
       key={props.id}
     >
       <p>
@@ -103,7 +103,6 @@ function Pedido(props: PedidoProps) {
             className="h-7 w-7 rounded-sm accent-emerald-400"
             onChange={handleSelect}
             type="checkbox"
-            checked={selected}
           />
         </div>
         <button

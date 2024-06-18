@@ -49,7 +49,7 @@ function Facturas() {
 
   return (
     <div className="h-screen bg-gradient-to-r from-cyan-500 to-teal-600">
-      <div className="flex flex-grow rounded-lg text-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+      <div className="grid rounded-lg text-center sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
         {facturas.map((factura) => (
           <div
             className="w- m-5 rounded-lg bg-white p-5 text-left text-xl shadow-sm"
